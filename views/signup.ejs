@@ -1,0 +1,22 @@
+<%- include partials/header %>
+
+<div class="container" id="signup-form">
+    <div class="row">
+        <div class="col-lg">
+            <form action="/signup" method="POST">
+                <div class="form-group">
+                    <label for="signup-username">Username</label>
+                    <input type="text" class="form-control" id="signup-username" name="username" placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" class="form-control" id="signup-password" name="password" placeholder="Enter Password" aria-describedby="tip">
+                    <small id="tip" class="form-text text-muted">We'll never share your information with anyone else.</small>
+                </div>
+                <input type="submit" value="Sign Up" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include partials/footer %>

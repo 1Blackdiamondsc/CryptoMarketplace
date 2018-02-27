@@ -1,66 +1,42 @@
-<% include partials/header %>
+<%- include partials/header %>
 
-<div id="content">
-    <h1 class="header">Staff Picks</h1>
-    <div class="ui one cards">
-        <a href="coin/<%=staffPick.id%>">
-            <div class="ui card" id="<%=staffPick.symbol%>">
-                <img src="<%=logos[staffPick.symbol]%>" class="logo">
-                <div class="card-content">
-                    <h1 class="coin-name"><%= staffPick.name %></h1>(<%= staffPick.symbol %>)
-                    <div class="info">
-                        <a href="coin/<%=staffPick.id%>">View More</a>
-                    </div> 
-                    <div class="price-block <%=staffPick.id%>">
-                        $<%=staffPick.price_usd%> | <%=staffPick.percent_change_24h%>%
-                    </div>
-                </div>
-                <!--SCRIPT-->
-                <script>
-                    var block = document.querySelector(".price-block.<%=staffPick.id%>");
-                    console.log(block);
-                    if(<%=staffPick.percent_change_24h%> > 0){
-                        block.style.background = "#093";
-                    } else {
-                        block.style.background = "#d14836";
-                    }
-                </script>
-            </div>
-        </a>       
+<!-- <div id="background-popup-darken" style="display:none"></div> -->
+
+<!-- Section: Table of top 100 coins -->
+<section class="secion section-table">
+    <div class="container">
+        <h4>CryptoMarketPlace - Coinmarketcap API Fetching Site</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Name (Tick)</th>
+                    <th scope="col">USD Price</th>
+                    <th scope="col">BTC Price</th>
+                    <th scope="col">Market Cap</th>
+                    <th scope="col">24hr Price</th>
+                    <th scope="col">Favorited</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% coins.forEach(function(coin){ %>
+                    <tr>
+                        <th scope="col" class="text-center">#<%= coin.rank %></th>
+                        <td scope="col"><img src="icons/<%= coin.symbol %>.png" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - <%= coin.symbol %></td>
+                        <td scope="col" class="text-center" style="color:green">$<%= coin.price_usd %></td>
+                        <td scope="col" class="text-center" style="color:orange">฿<%= coin.price_btc %></td>
+                        <td scope="col" class="text-center">$<%= coin.market_cap_usd %></td>
+                        <% if(coin.percent_change_24h < 0){ %>
+                            <td scope="col" style="color:red" class="text-center"><%= coin.percent_change_24h %>%</td>
+                        <% } else { %>
+                            <td scope="col" style="color:green" class="text-center">+<%= coin.percent_change_24h %>%</td>
+                        <% } %>
+                        <td scope="col" class="text-center">#</td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
     </div>
+</section>
 
-    
-    <h1 class="header">All Coins</h1>
-    <div class="ui four cards">
-        <% coins.forEach(function(coin){ %>
-            <a href="coin/<%=coin.id%>">
-                <div class="ui card" id="<%=coin.symbol%>">
-                    <img src="<%=logos[coin.symbol]%>" class="logo">
-                    <div class="card-content">
-                        <h1 class="coin-name"><%= coin.name %></h1>(<%= coin.symbol %>)
-                        <div class="info">
-                            <a href="coin/<%=coin.id%>">View More</a>
-                        </div> 
-                        <div class="price-block <%=coin.id%>">
-                            $<%=coin.price_usd%> | <%=coin.percent_change_24h%>%
-                        </div>
-                    </div>
-                    <!--SCRIPT-->
-                    <script>
-                        var block = document.querySelector(".price-block.<%=coin.id%>");
-                        console.log(block);
-                        if(<%=coin.percent_change_24h%> > 0){
-                            block.style.background = "#093";
-                        } else {
-                            block.style.background = "#d14836";
-                        }
-                    </script>
-                </div>
-            </a>
-        <% }) %>
-    </div>
-</div>
-
-
-
-<% include partials/footer %>
+<%- include partials/footer %>

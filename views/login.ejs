@@ -1,0 +1,22 @@
+<%- include partials/header %>
+
+<div class="container" id="login-form">
+    <div class="row">
+        <div class="col-lg">
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" class="form-control" id="login-username" name="username" placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" class="form-control" id="login-password" placeholder="Enter Password" aria-describedby="tip2" name="password">
+                    <small id="tip2" class="form-text text-muted">We'll never share your information with anyone else.</small>
+                </div>
+                <input type="submit" value="Login" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include partials/footer %>
