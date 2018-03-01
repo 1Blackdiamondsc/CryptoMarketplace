@@ -40,6 +40,6 @@ app.use(routes);
 
 
 // Start Server
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(process.env.PORT || 80, process.env.IP, function(){
     console.log(`CryptoMarketplace Server App listening on port ${process.env.IP}:${process.env.PORT}`)
 })
