@@ -14,7 +14,7 @@ router.get("/", function(req, res){
       if(!err && response.statusCode === 200){
           coins = JSON.parse(coins);
           for(coin of coins){
-            if(fs.existsSync('public/icons/' + coin.symbol + '.png')){
+            if(fs.existsSync('icons/' + coin.symbol + '.png')){
               coin.icon = 'icons/' + coin.symbol + '.png';
             } else {
               coin.icon = 'icons/default.png';
