@@ -33,7 +33,6 @@ passport.deserializeUser(User.deserializeUser());
 // Global Variables
 app.use(function(req, res, next){
     res.locals.user = req.user;
-    console.log(req.user);
     next();
 })
 
@@ -41,6 +40,6 @@ app.use(routes);
 
 
 // Start Server
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log(`CryptoMarketplace Server App listening on port ${process.env.IP}:${process.env.PORT}`)
 })
