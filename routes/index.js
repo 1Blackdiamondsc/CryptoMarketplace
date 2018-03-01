@@ -14,10 +14,11 @@ router.get("/", function(req, res){
       if(!err && response.statusCode === 200){
           coins = JSON.parse(coins);
           for(coin of coins){
+            coin.symbol = coin.symbol.toLowerCase();
             if(fs.existsSync('public/icons/' + coin.symbol + '.png')){
-              coin.icon = 'public/icons/' + coin.symbol + '.png';
+              coin.icon = 'icons/' + coin.symbol + '.png';
             } else {
-              coin.icon = 'public/icons/default.png';
+              coin.icon = 'icons/default.png';
             }
             if(coin.price_usd < 1){
               coin.price_usd = parseFloat(coin.price_usd).toFixed(4);
