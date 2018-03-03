@@ -6,6 +6,7 @@ var express = require("express"),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     methodOverride = require('method-override'),
+    http = require('http');
     User = require('./models/user');
 
     var routes = require('./routes/index');
@@ -30,16 +31,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Global Variables
+// Global Variables - ALWAYS AFTER PASSPORT CONFIG!!!
 app.use(function(req, res, next){
     res.locals.user = req.user;
     next();
 })
 
+// All routes - ALWAYS AFTER GLOBAL VARIABLES
 app.use(routes);
 
 
 // Start Server
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(process.env.PORT || 3000, process.env.IP, function(){
     console.log(`CryptoMarketplace Server App listening on port ${process.env.IP}:${process.env.PORT}`)
 })

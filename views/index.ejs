@@ -74,7 +74,7 @@
                         <% } %>
                         <% if(user){ %>
                             <td scope="col" class="text-center"> 
-                                <a class="favorite-item"><i class="material-icons favorite" id="favorite-<%= coin.symbol %>">star_border</i></a>
+                                <a class="favorite-item" onclick="toggleFavorite('<%= coin.symbol %>')"><i class="material-icons favorite" id="favorite-<%= coin.symbol %>">star_border</i></a>
                             </td>
                         <% } %>
                     </tr>

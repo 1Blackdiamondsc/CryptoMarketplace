@@ -30,20 +30,33 @@ router.get("/", function(req, res){
             coin.price_btc = parseFloat(coin.price_btc).toFixed(8);
             coin.market_cap_usd = numbro(coin.market_cap_usd.toString()).format('0a');
           }
+          // Check if user logged in
+          if(req.body.user){
+            // Get all of users favorite coins
+            console.log('Yes!!!');
+
+          }
+           
+          // Order favorites based on top coin
+          // Remove the coin from the default coins object
           res.render('index', {coins: coins});
       }
   })
 })
 
 // Update Favorite Coin
-router.post('/favorites', function(req, res){
-  let user = req.body.user;
-  console.log(req.body.user);
-  if(user.favorites.contains(req.body.coin)){
+router.post('/favorite', function(req, res){
+  // Get current logged in user and save as user
+  let user = req.user;
+  // If coin is in array, remove
+  if(user.favorites.indexOf(req.body.coin) >= 0){
+    // Remove from array and save
     user.favorites.splice(user.favorites.indexOf(req.body.coin), user.favorites.indexOf(req.body.coin) + 1);
     user.save();
     console.log(user.favorites);
-  } else {
+  // If coin isn't in favorites, add
+  } else if(!user.favorites.indexOf(req.body.coin) >= 0) {
+    // Add to favorites and save
     user.favorites.push(req.body.coin);
     user.save();
     console.log(user.favorites);
@@ -52,24 +65,7 @@ router.post('/favorites', function(req, res){
 
 // Show Profile
 router.get('/p/:username', function(req, res){
-  res.send(req.body.user.username);
-})
-
-router.post('/p/:username/favorite', function(req, res){
-  let favorites = req.body.user.favorites;
-  let found = false;
-  favorites.forEach(function(favorite){
-    if(!found && favorite === req.body.coin){
-      found = true;
-      const location = favorites.indexOf(favorite);
-      favoirte.splice(location, 1);
-    }
-  })
-  if(!found){
-    favorites.push(favorite);
-    console.log('coin added');
-  }
-  user.save();
+  res.send(req.user.username);
 })
 
 // Render Signup Page Form
