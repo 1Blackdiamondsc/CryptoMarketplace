@@ -3,7 +3,7 @@
 <!-- <div id="background-popup-darken" style="display:none"></div> -->
 
 <!-- Section: Table of top 100 coins -->
-<section class="secion section-table">
+<section class="secion section-table" id="section-table">
     <div class="container">
         <h3 id="header">CryptoMarketPlace - Coinmarketcap API Fetching Site</h3>
         <% if(user && user.favorites.length > 0){ %>
@@ -21,10 +21,14 @@
                     </tr>
                 </thead>
                 <tbody id="tbody-favorites">
-                    <!-- <% user.favorites.forEach(function(favorite){ %>
-                        <tr id="<%= coin.symbol %>">
-                            <th scope="col" class="text-center">#<%= coin.rank %></th>
-                                <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - (<%= coin.symbol %>)</td>
+                    <% coins.forEach(function(coin){ %>
+                        <% if(coin.hidden === false){ %>
+                            <tr id="<%= coin.symbol %>-fav-body" style="display:none">
+                        <% } else if(coin.hidden === true){ %>
+                            <tr id="<%= coin.symbol %>-fav-body">
+                        <% } %>
+                            <th scope="col" class="text-center"><%= coin.rank %></th>
+                                <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - (<%= coin.symbol.toUpperCase() %>)</td>
                             <td scope="col" class="text-center" style="color:green">$<%= coin.price_usd %></td>
                             <td scope="col" class="text-center" style="color:orange">฿<%= coin.price_btc %></td>
                             <td scope="col" class="text-center market-cap-usd">$<%= coin.market_cap_usd %></td>
@@ -35,11 +39,11 @@
                             <% } %>
                             <% if(user){ %>
                                 <td scope="col" class="text-center"> 
-                                    <a onclick="toggleFavorite(<%= coin.symbol %>)"><i class="material-icons favorite favorite-<%= coin.symbol %> ">star_border</i></a>
+                                    <a class="favorite-item" onclick="toggleFavorite('<%= coin.symbol %>')"><i class="material-icons favorite" id="favorite-<%= coin.symbol %>-fav-icon">star</i></a>
                                 </td>
                             <% } %>
-                        </tr> 
-                    <% }) %> -->
+                        </tr>
+                    <% }) %>
                 </tbody>
             </table>
             <br>
@@ -59,11 +63,16 @@
                     <% } %>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody-all">
                 <% coins.forEach(function(coin){ %>
-                    <tr id="<%= coin.symbol %>">
-                        <th scope="col" class="text-center">#<%= coin.rank %></th>
-                            <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - (<%= coin.symbol %>)</td>
+                    <% console.log(coin.hidden); %>
+                    <% if(coin.hidden === true){ %>
+                        <tr id="<%= coin.symbol %>" style="display:none">
+                    <% } else if(coin.hidden === false){ %>
+                        <tr id="<%= coin.symbol %>">
+                    <% } %>
+                        <th scope="col" class="text-center"><%= coin.rank %></th>
+                            <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - (<%= coin.symbol.toUpperCase() %>)</td>
                         <td scope="col" class="text-center" style="color:green">$<%= coin.price_usd %></td>
                         <td scope="col" class="text-center" style="color:orange">฿<%= coin.price_btc %></td>
                         <td scope="col" class="text-center market-cap-usd">$<%= coin.market_cap_usd %></td>
@@ -83,10 +92,6 @@
         </table>
     </div>
 </section>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
 <script src="scripts/ajax.js"></script>
 
 <%- include partials/footer %>

@@ -1,0 +1,78 @@
+<div class="container">
+  <h3 id="header">CryptoMarketPlace - Coinmarketcap API Fetching Site</h3>
+  <% if(user && user.favorites.length > 0){ %>
+      <h5 class="subheader">Favorites Coins</h5>
+      <table class="table" id="table-favorites">
+          <thead>
+              <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Name (Tick)</th>
+                  <th scope="col">USD Price</th>
+                  <th scope="col">BTC Price</th>
+                  <th scope="col">Market Cap</th>
+                  <th scope="col">24hr Price</th>
+                  <th scope="col">Favorited</th>                   
+              </tr>
+          </thead>
+          <tbody id="tbody-favorites">
+              <% favorites.forEach(function(favorite){ %>
+                  <tr id="<%= favorite.symbol %>">
+                      <th scope="col" class="text-center">#<%= favorite.rank %></th>
+                          <td scope="col"><img src="<%= favorite.icon %>" alt="<%= favorite.name %>" class="coin-icon"><strong><%= favorite.name %></strong> - (<%= favorite.symbol.toUpperCase() %>)</td>
+                      <td scope="col" class="text-center" style="color:green">$<%= favorite.price_usd %></td>
+                      <td scope="col" class="text-center" style="color:orange">฿<%= favorite.price_btc %></td>
+                      <td scope="col" class="text-center market-cap-usd">$<%= favorite.market_cap_usd %></td>
+                      <% if(favorite.percent_change_24h < 0){ %>
+                          <td scope="col" style="color:red" class="text-center"><%= favorite.percent_change_24h %>%</td>
+                      <% } else { %>
+                          <td scope="col" style="color:green" class="text-center">+<%= favorite.percent_change_24h %>%</td>
+                      <% } %>
+                      <% if(user){ %>
+                          <td scope="col" class="text-center"> 
+                              <a class="favorite-item" onclick="toggleFavorite('<%= favorite.symbol %>')"><i class="material-icons favorite" id="favorite-<%= favorite.symbol %>">star</i></a>
+                          </td>
+                      <% } %>
+                  </tr>
+              <% }) %>
+          </tbody>
+      </table>
+      <br>
+  <% } %>
+  <h5 class="subheader">All Coins</h5>
+  <table class="table" id="table-all">
+      <thead>
+          <tr>
+              <th scope="col">Rank</th>
+              <th scope="col">Name (Tick)</th>
+              <th scope="col">USD Price</th>
+              <th scope="col">BTC Price</th>
+              <th scope="col">Market Cap</th>
+              <th scope="col">24hr Price</th>
+              <% if(user){ %>
+                  <th scope="col">Favorited</th>
+              <% } %>
+          </tr>
+      </thead>
+      <tbody>
+          <% coins.forEach(function(coin){ %>
+              <tr id="<%= coin.symbol %>">
+                  <th scope="col" class="text-center">#<%= coin.rank %></th>
+                      <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - (<%= coin.symbol.toUpperCase() %>)</td>
+                  <td scope="col" class="text-center" style="color:green">$<%= coin.price_usd %></td>
+                  <td scope="col" class="text-center" style="color:orange">฿<%= coin.price_btc %></td>
+                  <td scope="col" class="text-center market-cap-usd">$<%= coin.market_cap_usd %></td>
+                  <% if(coin.percent_change_24h < 0){ %>
+                      <td scope="col" style="color:red" class="text-center"><%= coin.percent_change_24h %>%</td>
+                  <% } else { %>
+                      <td scope="col" style="color:green" class="text-center">+<%= coin.percent_change_24h %>%</td>
+                  <% } %>
+                  <% if(user){ %>
+                      <td scope="col" class="text-center"> 
+                          <a class="favorite-item" onclick="toggleFavorite('<%= coin.symbol %>')"><i class="material-icons favorite" id="favorite-<%= coin.symbol %>">star_border</i></a>
+                      </td>
+                  <% } %>
+              </tr>
+          <% }) %>
+      </tbody>
+  </table>
+</div>

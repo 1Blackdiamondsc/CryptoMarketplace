@@ -10,37 +10,54 @@ var User = require("../models/user");
 
 // Homepage that loads list of top 100 coins
 router.get("/", function(req, res){
-  request("https://api.coinmarketcap.com/v1/ticker/?limit=100", function(err, response, coins){
-      if(!err && response.statusCode === 200){
-          coins = JSON.parse(coins);
-          for(coin of coins){
-            coin.symbol = coin.symbol.toLowerCase();
-            if(fs.existsSync('public/icons/' + coin.symbol + '.png')){
-              coin.icon = 'icons/' + coin.symbol + '.png';
-            } else {
-              coin.icon = 'icons/default.png';
-            }
-            if(coin.price_usd < 1){
-              coin.price_usd = parseFloat(coin.price_usd).toFixed(4);
-            } else if(coin.price_usd < 50){
-              coin.price_usd = parseFloat(coin.price_usd).toFixed(2);
-            } else if(coin.price_usd >= 50){
-              coin.price_usd = parseInt(coin.price_usd).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            }
-            coin.price_btc = parseFloat(coin.price_btc).toFixed(8);
-            coin.market_cap_usd = numbro(coin.market_cap_usd.toString()).format('0a');
-          }
-          // Check if user logged in
-          if(req.body.user){
-            // Get all of users favorite coins
-            console.log('Yes!!!');
-
-          }
-           
-          // Order favorites based on top coin
-          // Remove the coin from the default coins object
-          res.render('index', {coins: coins});
+  // Make coins request
+  request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function(err, response, coins){
+    if(!err & response.statusCode === 200){
+      coins = JSON.parse(coins);
+      for(coin of coins){
+        coin.symbol = coin.symbol.toLowerCase();
+        if(fs.existsSync('public/icons/' + coin.symbol + '.png')){
+          coin.icon = 'icons/' + coin.symbol + '.png';
+        } else {
+          coin.icon = 'icons/default.png';
+        }
+        if(coin.price_usd < 1){
+          coin.price_usd = parseFloat(coin.price_usd).toFixed(4);
+        } else if(coin.price_usd < 50){
+          coin.price_usd = parseFloat(coin.price_usd).toFixed(2);
+        } else if(coin.price_usd >= 50){
+          coin.price_usd = parseInt(coin.price_usd).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        coin.price_btc = parseFloat(coin.price_btc).toFixed(8);
+        coin.market_cap_usd = numbro(coin.market_cap_usd.toString()).format('0a');
       }
+      if(coins !== undefined){
+        // Check if user logged in
+        if(req.user){
+          // Check if user has any favorites
+          if(req.user.favorites.length > 0){
+            let favorites = [];
+            // Loop through all coins and see if they are in favorites array, 
+            // then remove if so and add to new ordered array and remove
+            for(coin of coins){
+              for(favorite of req.user.favorites){
+                coin.hidden = false;
+                if(coin.symbol === favorite){
+                  favorites.push(coin);
+                  coin.hidden = true;
+                  break;
+                } else {
+                  coin.hidden = false;
+                }
+              }
+            }
+            console.log(coins.hidden);
+            return res.render('index', {coins: coins, favorites: favorites});
+          }
+        }
+        return res.render('index', {coins: coins});
+      }
+    }
   })
 })
 
@@ -51,15 +68,15 @@ router.post('/favorite', function(req, res){
   // If coin is in array, remove
   if(user.favorites.indexOf(req.body.coin) >= 0){
     // Remove from array and save
-    user.favorites.splice(user.favorites.indexOf(req.body.coin), user.favorites.indexOf(req.body.coin) + 1);
+    user.favorites.splice(user.favorites.indexOf(req.body.coin), 1);
     user.save();
-    console.log(user.favorites);
+    res.send('Coin Removed!');
   // If coin isn't in favorites, add
   } else if(!user.favorites.indexOf(req.body.coin) >= 0) {
     // Add to favorites and save
     user.favorites.push(req.body.coin);
     user.save();
-    console.log(user.favorites);
+    res.send('Coin Added!');
   }
 })
 

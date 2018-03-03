@@ -1,13 +1,16 @@
 function toggleFavorite(coin){
-    var star = document.getElementById('favorite-' + coin);
-    if(star.innerHTML === 'star')
-        star.innerHTML = 'star_border';
-    else
-        star.innerHTML = 'star';
     var xht = new XMLHttpRequest();
     xht.onreadystatechange = function(){
-        if(this.readyState === 4 && this.status === 200){
-            console.log(coin);
+        if(this.readyState == 4 && this.status == 200) {
+            var coinRowFav = document.getElementById(coin + '-fav-body');
+            var coinRow = document.getElementById(coin);
+            if(coinRow.style.display === 'none'){
+                coinRow.style.display = 'table-row';
+                coinRowFav.style.display = 'none';
+            } else {
+                coinRow.style.display = 'none';
+                coinRowFav.style.display = 'table-row';
+            }
         }
     };
     xht.open('POST', '/favorite', true);
