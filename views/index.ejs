@@ -28,7 +28,7 @@
                             <tr id="<%= coin.symbol %>-fav-body">
                         <% } %>
                             <th scope="col" class="text-center"><%= coin.rank %></th>
-                                <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - (<%= coin.symbol.toUpperCase() %>)</td>
+                                <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><a href="/c/<%= coin.symbol %>" class="light-grey-text"><strong><%= coin.name %></strong> - (<%= coin.symbol.toUpperCase() %>)</a></td>
                             <td scope="col" class="text-center" style="color:green">$<%= coin.price_usd %></td>
                             <td scope="col" class="text-center" style="color:orange">฿<%= coin.price_btc %></td>
                             <td scope="col" class="text-center market-cap-usd">$<%= coin.market_cap_usd %></td>
@@ -65,14 +65,13 @@
             </thead>
             <tbody id="tbody-all">
                 <% coins.forEach(function(coin){ %>
-                    <% console.log(coin.hidden); %>
                     <% if(coin.hidden === true){ %>
                         <tr id="<%= coin.symbol %>" style="display:none">
                     <% } else if(coin.hidden === false){ %>
                         <tr id="<%= coin.symbol %>">
                     <% } %>
                         <th scope="col" class="text-center"><%= coin.rank %></th>
-                            <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><strong><%= coin.name %></strong> - (<%= coin.symbol.toUpperCase() %>)</td>
+                            <td scope="col"><img src="<%= coin.icon %>" alt="<%= coin.name %>" class="coin-icon"><a href="/c/<%= coin.symbol %>" class="light-grey-text"><strong><%= coin.name %></strong> - (<%= coin.symbol.toUpperCase() %>)</a></td>
                         <td scope="col" class="text-center" style="color:green">$<%= coin.price_usd %></td>
                         <td scope="col" class="text-center" style="color:orange">฿<%= coin.price_btc %></td>
                         <td scope="col" class="text-center market-cap-usd">$<%= coin.market_cap_usd %></td>

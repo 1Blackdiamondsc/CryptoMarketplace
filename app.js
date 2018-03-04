@@ -40,7 +40,6 @@ app.use(function(req, res, next){
 // All routes - ALWAYS AFTER GLOBAL VARIABLES
 app.use(routes);
 
-
 // Start Server
 app.listen(process.env.PORT || 3000, process.env.IP, function(){
     console.log(`CryptoMarketplace Server App listening on port ${process.env.IP}:${process.env.PORT}`)

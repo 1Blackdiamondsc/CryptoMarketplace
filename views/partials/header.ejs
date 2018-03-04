@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <title>CryptoMarketPlace</title>
@@ -21,7 +21,7 @@
             <ul class="navbar-nav mr-auto">
                 <% if(user) { %>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile/">Your Profile</a>
+                    <a class="nav-link" href="/p/<%= user.username %>">Your Profile</a>
                 </li>
                 <% } %>
             </ul>
@@ -31,7 +31,7 @@
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Logged In: <%= user.username %></a>
+                        <a class="nav-link light-grey-text" href="/p/<%= user.username %>">Logged In: <%= user.username %></a>
                     </li>
                 <% } else if(!user) { %>
                     <li class="nav-item">
@@ -45,3 +45,5 @@
         </div>
     </nav>
     <div class="break"></div>
+
+    
