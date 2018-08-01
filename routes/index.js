@@ -106,7 +106,7 @@ router.get('/logout', function(req, res){
 }),
 
 // Get Coins
-router.use getCoins = function(){
+router.use(){
   request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function(err, response, coins){
       if(!err & response.statusCode === 200){
       coins = JSON.parse(coins);
