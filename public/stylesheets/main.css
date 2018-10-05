@@ -49,6 +49,7 @@ body {
 
 .favorite {
   color: rgb(230, 230, 34);
+  cursor: pointer;
 }
 
 .favorite:hover {

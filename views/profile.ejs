@@ -9,7 +9,9 @@
     <hr class="hr">
     <div class="row">
       <div class="col-sm">
-        
+        <% for(favorite of user.favorites){ %>
+          <h5> <%= favorite %> </h5>
+        <% } %>
       </div>
     </div>
   </div>

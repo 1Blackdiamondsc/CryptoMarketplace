@@ -5,9 +5,9 @@
 <!-- Section: Table of top 100 coins -->
 <section class="secion section-table" id="section-table">
     <div class="container">
-        <h3 id="header">CryptoMarketPlace - Coinmarketcap API Fetching Site</h3>
+        <h3 id="header">Crypto Marketplace - Coinmarketcap API Fetching Site</h3>
         <% if(user && user.favorites.length > 0){ %>
-            <h5 class="subheader">Favorites Coins</h5>
+            <h5 class="subheader">Favorite Coins</h5>
             <table class="table" id="table-favorites">
                 <thead>
                     <tr>
@@ -59,7 +59,7 @@
                     <th scope="col">Market Cap</th>
                     <th scope="col">24hr Price</th>
                     <% if(user){ %>
-                        <th scope="col">Favorited</th>
+                        <th scope="col">Favorite</th>
                     <% } %>
                 </tr>
             </thead>
@@ -67,7 +67,7 @@
                 <% coins.forEach(function(coin){ %>
                     <% if(coin.hidden === true){ %>
                         <tr id="<%= coin.symbol %>" style="display:none">
-                    <% } else if(coin.hidden === false){ %>
+                    <% } else { %>
                         <tr id="<%= coin.symbol %>">
                     <% } %>
                         <th scope="col" class="text-center"><%= coin.rank %></th>
